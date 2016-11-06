@@ -6,11 +6,10 @@
 #' @rdname settings
 settingsTabConfig <- function() {
   boxWide(
-    title = "~/.shinyMonitoring/.config", 
-    width = 12,
+    title = "~/.shinyMonitoring/.config",
     aceEditor("settingsConfig", fontSize = 14, value = settingsGetConfig(), mode = "r", theme = "github"),
-    shiny::actionButton("settingsSave", "Save"),
-    shiny::actionButton("settingsRestore", "Restore")
+    actionButton("settingsSave", "Save"),
+    actionButton("settingsRestore", "Restore")
   )
 }
 
@@ -35,24 +34,25 @@ settingsRestore <- function(session) {
 #' @rdname settings
 settingsGetConfig <- function() {
 
-  readConfig <- function() {
-    paste(readLines("~/.shinyMonitoring/.config"), collapse = "\n")
-  }
-
   configExists <- function() {
     file.exists("~/.shinyMonitoring/.config")
   }
 
+  configRead <- function() {
+    paste(readLines("~/.shinyMonitoring/.config"), collapse = "\n")
+  }
+
   configInit <- function() {
     if (!dir.exists("~/.shinyMonitoring")) dir.create("~/.shinyMonitoring")
-    writeLines(settingsDefault(), "~/.shinyMonitoring/.config")
-    settingsDefault()
+    writeLines(configDefault(), "~/.shinyMonitoring/.config")
+    configDefault()
+  }
+
+  configDefault <- function() {
+    "path <- '/var/log/'"
   }
   
-  if (configExists()) readConfig() else configInit()
+  if (configExists()) configRead() else configInit()
   
 }
 
-settingsDefault <- function() {
-  "path <- '/var/log/'"
-}
