@@ -1,0 +1,16 @@
+Package: shinyMonitoring
+Title: Tools for monitoring log files
+Version: 0.0.1
+Authors@R: person("Sebastian", "Warnholz", email = "first.last@example.com", role = c("aut", "cre"))
+Description: Siny apps and components for monitoring log files. E.g. created by
+    shiny applications.
+Depends:
+    R (>= 3.3.2),
+    shiny
+Imports:
+    shinyAce,
+    shinydashboard
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
