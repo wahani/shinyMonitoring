@@ -6,13 +6,19 @@ ui <- dashboardPage(
 
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Settings", tabName = "settings", icon = icon("cog"))
+      menuItem("Settings", tabName = "settings", icon = icon("cog")),
+      menuItem("Folder", tabName = "folder", icon = icon("folder-o"))
     )
   ),
-  dashboardBody(
+  dashboardBody(tabItems(
     tabFluid(
       tabName = "settings",
       settingsTabConfig()
+    ),
+    tabFluid(
+      tabName = "folder",
+      boxWide(DT::dataTableOutput("folder")),
+      uiOutput("fileLog")
     )
-  )
+  ))
 )

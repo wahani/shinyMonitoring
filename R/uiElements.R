@@ -7,7 +7,7 @@
 #' @export
 #' @rdname uiElements
 boxWide <- function(...) {
-  box(..., background = "light-blue", width = 12)  
+  box(..., width = 12)  
 }
 
 #' @param tabName (character)
