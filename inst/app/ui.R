@@ -7,7 +7,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Settings", tabName = "settings", icon = icon("cog")),
-      menuItem("Folder", tabName = "folder", icon = icon("folder-o"))
+      menuItem("Folder", tabName = "folder", icon = icon("folder"))
     )
   ),
   dashboardBody(tabItems(

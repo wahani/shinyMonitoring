@@ -7,7 +7,7 @@
 settingsTabConfig <- function() {
   boxWide(
     title = "~/.shinyMonitoring/.config",
-    aceEditor("settingsConfig", fontSize = 14, value = settingsGetConfig(), mode = "r", theme = "github"),
+    aceEditor("settingsEditor", fontSize = 14, value = settingsGetConfig(), mode = "r", theme = "github"),
     actionButton("settingsSave", "Save"),
     actionButton("settingsRestore", "Restore")
   )
@@ -19,7 +19,8 @@ settingsTabConfig <- function() {
 #' @export
 #' @rdname settings
 settingsSave <- function(configText) {
-  writeLines(configText, "~/.shinyMonitoring/.config")
+  if (is.null(configText)) file.remove("~/.shinyMonitoring/.config") 
+  else writeLines(configText, "~/.shinyMonitoring/.config")
 }
 
 #' @param session the current shiny session
@@ -27,7 +28,7 @@ settingsSave <- function(configText) {
 #' @export
 #' @rdname settings
 settingsRestore <- function(session) {
-  updateAceEditor(session, "settingsConfig", value = settingsGetConfig())
+  updateAceEditor(session, "settingsEditor", value = settingsGetConfig())
 }
 
 #' @export
@@ -56,3 +57,9 @@ settingsGetConfig <- function() {
   
 }
 
+#' @export
+#' @rdname settings
+settingsUse <- function(configText) {
+  writeLines(configText, tmp <- tempfile())
+  use(tmp)
+}

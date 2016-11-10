@@ -5,6 +5,7 @@
 \alias{settingsRestore}
 \alias{settingsSave}
 \alias{settingsTabConfig}
+\alias{settingsUse}
 \title{Settings Elements}
 \usage{
 settingsTabConfig()
@@ -14,6 +15,8 @@ settingsSave(configText)
 settingsRestore(session)
 
 settingsGetConfig()
+
+settingsUse(configText)
 }
 \arguments{
 \item{configText}{(character)}

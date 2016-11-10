@@ -6,24 +6,44 @@ server <- function(input, output, session) {
   ##############################################################################
 
   folder <- reactive({
-    dat <- file.info(list.files("/var/log", ".log$", full.names = TRUE))
+
+    dat <- file.info(list.files(
+      settings()$dir,
+      settings()$pattern,
+      full.names = TRUE,
+      recursive = TRUE
+    ))
+    
     dat[c("isdir", "mode", "uid", "gid", "uname", "grname")] <- NULL
     dat
+    
   })
   
   output$folder <- DT::renderDataTable(options = list(lengthChange = FALSE), {
-    DT::datatable(folder(), selection = 'single')
+    DT::datatable(folder(), selection = 'multiple')
   })
 
   output$fileLog <- renderUI({
     if (is.null(input$folder_rows_selected)) return(NULL)
-    boxWide(renderText(
-      readLines(rownames(folder())[input$folder_rows_selected])
-    ))
+    fileName <- rownames(folder())[input$folder_rows_selected]    
+    boxWide(
+      title = fileName,
+      HTML(paste(readLines(fileName), collapse = "<br/>"))
+    )
+    
   })
 
   ## Settings:
   ##############################################################################
+
+  settings <- reactive({
+
+    ## dir <- "/var/log"
+    ## pattern <- ".log$"
+
+    settingsUse(input$settingsEditor)
+    
+  })
 
   observeEvent(input$settingsSave, {
     settingsSave(input$settingsConfig)
