@@ -37,16 +37,11 @@ server <- function(input, output, session) {
   ##############################################################################
 
   settings <- reactive({
-
-    ## dir <- "/var/log"
-    ## pattern <- ".log$"
-
     settingsUse(input$settingsEditor)
-    
   })
 
   observeEvent(input$settingsSave, {
-    settingsSave(input$settingsConfig)
+    settingsSave(input$settingsEditor)
   })
 
   observeEvent(input$settingsRestore, {

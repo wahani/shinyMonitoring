@@ -12,13 +12,13 @@ ui <- dashboardPage(
   ),
   dashboardBody(tabItems(
     tabFluid(
-      tabName = "settings",
-      settingsTabConfig()
-    ),
-    tabFluid(
       tabName = "folder",
       boxWide(DT::dataTableOutput("folder")),
       uiOutput("fileLog")
+    ),
+    tabFluid(
+      tabName = "settings",
+      settingsTabConfig()
     )
   ))
 )
