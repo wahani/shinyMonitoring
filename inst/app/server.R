@@ -2,21 +2,25 @@ library("shinyMonitoring")
 
 server <- function(input, output, session) {
 
-  ## folder:
+  ## Folder:
   ##############################################################################
 
   folder <- reactive({
 
-    dat <- file.info(list.files(
-      settings()$dir,
-      settings()$pattern,
-      full.names = TRUE,
-      recursive = TRUE
-    ))
+    folderGet <- function(path, pattern, recursive, properties) {
+
+      dat <- file.info(list.files(
+        path,
+        pattern,
+        full.names = TRUE,
+        recursive = recursive,
+        include.dirs = FALSE
+      ))
     
-    dat[c("isdir", "mode", "uid", "gid", "uname", "grname")] <- NULL
-    dat
-    
+      dat[properties]
+      
+    }
+
   })
   
   output$folder <- DT::renderDataTable(options = list(lengthChange = FALSE), {
