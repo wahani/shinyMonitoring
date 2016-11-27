@@ -10,15 +10,23 @@ ui <- dashboardPage(
       menuItem("Folder", tabName = "folder", icon = icon("folder"))
     )
   ),
-  dashboardBody(tabItems(
-    tabFluid(
-      tabName = "folder",
-      boxWide(DT::dataTableOutput("folder")),
-      uiOutput("fileLog")
+  dashboardBody(
+    tags$head(
+      tags$link(
+        rel = "stylesheet",
+        type = "text/css",
+        href = "shinyMonitoring.css"
+      )
     ),
-    tabFluid(
-      tabName = "settings",
-      settingsTabConfig()
-    )
-  ))
+    tabItems(
+      tabFluid(
+        tabName = "folder",
+        boxWide(DT::dataTableOutput("folder")),
+        uiOutput("fileLog")
+      ),
+      tabFluid(
+        tabName = "settings",
+        settingsTabConfig()
+      )
+    ))
 )

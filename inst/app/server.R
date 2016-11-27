@@ -7,22 +7,6 @@ server <- function(input, output, session) {
 
   folder <- reactive({
 
-    folderGet <- function(path, pattern, recursive, properties) {
-
-      dat <- file.info(list.files(
-        path,
-        pattern,
-        full.names = TRUE,
-        recursive = recursive,
-        include.dirs = FALSE
-      ))
-
-      dat$mode <- as.integer(dat$mode)
-
-      dat[properties]
-      
-    }
-
     folderGet(
       settings()$path,
       settings()$pattern,
@@ -39,12 +23,29 @@ server <- function(input, output, session) {
   output$fileLog <- renderUI({
 
     if (is.null(input$folder_rows_selected)) return(NULL)
+    
+    fileName <- rownames(folder())[input$folder_rows_selected]
+    fileText <- readLines(fileName)
 
-    fileName <- rownames(folder())[input$folder_rows_selected]    
-    boxWide(
-      title = fileName,
-      HTML(paste(readLines(fileName), collapse = "<br/>"))
+    fileText <- gsub(
+      "error",
+      "<span class = \"sm-error\">error</span>",
+      fileText,
+      ignore.case = TRUE
     )
+
+    fileText <- gsub(
+      "warning",
+      "<span class = \"sm-warning\">warning</span>",
+      fileText,
+      ignore.case = TRUE
+    )
+    
+    fileText <- paste0(fileText, "<br />")
+    
+    fileText <- paste0(fileText[grep("error", fileText, TRUE)], collapse = "")
+    
+    boxFileContent(title = fileName, HTML(fileText))
     
   })
 
