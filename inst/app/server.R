@@ -16,10 +16,19 @@ server <- function(input, output, session) {
         recursive = recursive,
         include.dirs = FALSE
       ))
-    
+
+      dat$mode <- as.integer(dat$mode)
+
       dat[properties]
       
     }
+
+    folderGet(
+      settings()$path,
+      settings()$pattern,
+      settings()$recursive,
+      settings()$properties
+    )
 
   })
   
@@ -28,7 +37,9 @@ server <- function(input, output, session) {
   })
 
   output$fileLog <- renderUI({
+
     if (is.null(input$folder_rows_selected)) return(NULL)
+
     fileName <- rownames(folder())[input$folder_rows_selected]    
     boxWide(
       title = fileName,
@@ -50,6 +61,10 @@ server <- function(input, output, session) {
 
   observeEvent(input$settingsRestore, {
     settingsRestore(session)
+  })
+
+  observeEvent(input$settingsRestoreDefault, {
+    settingsRestoreDefault(session)
   })
   
 }

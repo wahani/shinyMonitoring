@@ -3,6 +3,7 @@
 \name{settingsTabConfig}
 \alias{settingsGetConfig}
 \alias{settingsRestore}
+\alias{settingsRestoreDefault}
 \alias{settingsSave}
 \alias{settingsTabConfig}
 \alias{settingsUse}
@@ -17,6 +18,8 @@ settingsRestore(session)
 settingsGetConfig()
 
 settingsUse(configText)
+
+settingsRestoreDefault(session)
 }
 \arguments{
 \item{configText}{(character)}

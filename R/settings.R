@@ -9,10 +9,10 @@ settingsTabConfig <- function() {
     title = "~/.shinyMonitoring/.config",
     aceEditor("settingsEditor", fontSize = 14, value = settingsGetConfig(), mode = "r", theme = "github"),
     actionButton("settingsSave", "Save"),
-    actionButton("settingsRestore", "Restore")
+    actionButton("settingsRestore", "Restore"),
+    actionButton("settingsRestoreDefault", "Restore Default")
   )
 }
-
 
 #' @param configText (character)
 #' 
@@ -46,11 +46,11 @@ settingsGetConfig <- function() {
   configInit <- function() {
     if (!dir.exists("~/.shinyMonitoring")) dir.create("~/.shinyMonitoring")
     writeLines(configDefault(), "~/.shinyMonitoring/.config")
-    configDefault()
+    configRead()
   }
 
   configDefault <- function() {
-    "path <- '/var/log/'"
+    readLines(system.file("configDefault.R", package = "shinyMonitoring"))
   }
   
   if (configExists()) configRead() else configInit()
@@ -62,4 +62,11 @@ settingsGetConfig <- function() {
 settingsUse <- function(configText) {
   writeLines(configText, tmp <- tempfile())
   use(tmp)
+}
+
+#' @export
+#' @rdname settings
+settingsRestoreDefault <- function(session) {
+  settingsSave(NULL)
+  settingsRestore(session)
 }
