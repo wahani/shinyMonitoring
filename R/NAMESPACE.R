@@ -1,9 +1,9 @@
-#' @importFrom shinydashboard dashboardHeader dashboardSidebar dashboardBody
-#' dashboardPage box sidebarMenu menuItem tabItem tabItems
-#' @importFrom shinyAce aceEditor updateAceEditor
-#' @import shiny
-#' @importFrom DT datatable
+#' @importFrom DT renderDataTable datatable
 #' @importFrom modules use
+#' @importFrom shiny runApp
+#' @importFrom shinyAce aceEditor updateAceEditor
+#' @importFrom shinydashboard dashboardHeader dashboardSidebar dashboardBody
+#'   dashboardPage box sidebarMenu menuItem tabItem tabItems
 NULL 
 
 #' @export aceEditor
@@ -29,3 +29,6 @@ shinydashboard::menuItem
 
 #' @export
 shinydashboard::tabItems
+
+#' @export
+DT::renderDataTable

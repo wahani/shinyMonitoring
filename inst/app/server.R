@@ -5,9 +5,9 @@ server <- function(input, output, session) {
   ## Folder:
   ##############################################################################
 
-  folder <- reactive({
+  folderInfo <- reactive({
 
-    folderGet(
+    folderGetInfo(
       settings()$path,
       settings()$pattern,
       settings()$recursive,
@@ -15,35 +15,34 @@ server <- function(input, output, session) {
     )
 
   })
-  
-  output$folder <- DT::renderDataTable(options = list(lengthChange = FALSE), {
-    DT::datatable(folder(), selection = 'multiple')
+
+  output$folder <- renderDataTable({
+    folderInit(folderInfo(), files())
   })
 
   output$fileLog <- renderUI({
 
     if (is.null(input$folder_rows_selected)) return(NULL)
     
-    fileName <- rownames(folder())[input$folder_rows_selected]
+    fileName <- folderInfo()$file[input$folder_rows_selected]
     fileText <- readLines(fileName)
 
     fileText <- gsub(
       "error",
-      "<span class = \"sm-error\">error</span>",
+      "<span class = \"smError\">error</span>",
       fileText,
       ignore.case = TRUE
     )
 
     fileText <- gsub(
       "warning",
-      "<span class = \"sm-warning\">warning</span>",
+      "<span class = \"smWarning\">warning</span>",
       fileText,
       ignore.case = TRUE
     )
     
     fileText <- paste0(fileText, "<br />")
-    
-    fileText <- paste0(fileText[grep("error", fileText, TRUE)], collapse = "")
+    fileText <- paste0(fileText, collapse = "")
     
     boxFileContent(title = fileName, HTML(fileText))
     

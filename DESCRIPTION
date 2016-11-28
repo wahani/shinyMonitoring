@@ -5,9 +5,11 @@ Authors@R: person("Sebastian", "Warnholz", email = "first.last@example.com", rol
 Description: Siny apps and components for monitoring log files. E.g. created by
     shiny applications.
 Depends:
-    R (>= 3.3.2),
-    shiny
+    R (>= 3.3.2)
 Imports:
+    DT,
+    modules,
+    shiny,
     shinyAce,
     shinydashboard
 License: MIT
